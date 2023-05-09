@@ -25,7 +25,7 @@
     "no-unused-vars": "off",
     "no-console": "warn",
     "@typescript-eslint/no-unused-vars": [
-      "off",
+      "error",
       {
         "ignoreRestSiblings": true
       }
