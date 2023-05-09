@@ -5,11 +5,11 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'Dog And Pony Studios - Offices',
-  description: 'An application to list all Dog And Pony Studio Offices'
+  description: 'An application to list all Dog And Pony Studio Offices',
 }
 
 export default function RootLayout({
-  children
+  children,
 }: {
   children: React.ReactNode
 }) {
