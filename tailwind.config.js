@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { fontFamily } = require('tailwindcss/defaultTheme')
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -17,6 +20,9 @@ module.exports = {
           grey: '#989Ea7',
           'light-grey': '#e8edf3',
         },
+      },
+      fontFamily: {
+        sans: ['var(--font-roboto)', ...fontFamily.sans],
       },
     },
   },
