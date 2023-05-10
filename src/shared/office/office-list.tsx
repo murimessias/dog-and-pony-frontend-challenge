@@ -87,18 +87,30 @@ export const OfficeList = ({ offices }: OfficesListProps) => {
     })
   }
 
+  const resetEditingOffices = () => {
+    setCurrentOffices((prevOffices) => {
+      return prevOffices.map((prevOffice) => ({
+        ...prevOffice,
+        status: 'default',
+      }))
+    })
+  }
+
   return (
     <div className='flex flex-col gap-8'>
-      <div>
-        <Button
-          fullWidth
-          rightAddon={<Icon as='add' />}
-          onClick={() => insertOffice(newOfficeMock)}
-        >
-          Add New Location
-        </Button>
-      </div>
-      <Accordion collapsible defaultValue='item-1' type='single'>
+      <Button
+        fullWidth
+        onClick={() => insertOffice(newOfficeMock)}
+        rightAddon={<Icon as='add' />}
+      >
+        Add New Location
+      </Button>
+      <Accordion
+        collapsible
+        defaultValue='item-1'
+        onValueChange={() => resetEditingOffices()}
+        type='single'
+      >
         {currentOffices.map((office) => {
           return (
             <AccordionItem key={office.id} value={office.id}>
@@ -107,6 +119,9 @@ export const OfficeList = ({ offices }: OfficesListProps) => {
                   <div className='text-left'>
                     <AccordionHeader>{office.title}</AccordionHeader>
                     <span>{office.address}</span>
+                  </div>
+                  <div className='text-accent-blue group-data-[state=open]:rotate-180 group-data-[state=open]:text-white'>
+                    <Icon as='chevron-down' size='md' />
                   </div>
                 </AccordionTrigger>
               )}
