@@ -60,7 +60,7 @@ export const OfficeInsertForm = ({ onSave }: OfficeInsertFormProps) => {
         />
       </div>
       <div>
-        <h4 className='text-sm uppercase text-accent-blue'>
+        <h4 className='text-xs uppercase text-accent-blue'>
           Contact Information
         </h4>
         <RadixSeparatorPrimitive.Root

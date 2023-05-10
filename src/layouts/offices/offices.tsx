@@ -35,7 +35,7 @@ export const OfficesLayout = () => {
       <footer className='flex flex-col gap-2 text-center'>
         <span className='block'>This project is for test purpose only.</span>
         <a
-          className='text-sm uppercase leading-none tracking-wide text-accent-blue'
+          className='text-xs uppercase leading-none tracking-wide text-accent-blue'
           href='https://www.dogandponystudios.com'
           rel='noopener noreferrer'
           target='_blank'

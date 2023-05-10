@@ -32,7 +32,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           'inline-flex w-fit min-w-[7ch] items-center justify-center gap-2 rounded  text-center font-normal outline-none transition-colors  disabled:cursor-not-allowed disabled:bg-primary-grey disabled:text-white',
           fullWidth && 'w-full',
           size === 'base' && 'min-h-[40px] px-4 py-2 text-base',
-          size === 'sm' && 'p-0.5 text-sm leading-none tracking-[0.02em]',
+          size === 'sm' && 'p-0.5 text-xs leading-none tracking-[0.02em]',
           variant === 'attention' &&
             'uppercase  text-accent-red hover:ring-2 hover:ring-accent-red hover:ring-offset-1 focus:ring-2 focus:ring-accent-red focus:ring-offset-2 disabled:uppercase',
           variant === 'neutral' &&

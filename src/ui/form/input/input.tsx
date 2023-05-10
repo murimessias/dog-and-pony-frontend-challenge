@@ -77,7 +77,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         {!!helperText && (
           <small
             className={clsx(
-              'relative -bottom-1 text-sm',
+              'relative -bottom-1 text-xs',
               status === 'error' && 'text-accent-red',
             )}
           >
