@@ -102,7 +102,7 @@ export const OfficeList = ({ offices }: OfficesListProps) => {
               fullWidth
               rightAddon={<Icon as='add' />}
             >
-              New Location
+              Add New Location
             </Button>
           </AccordionTrigger>
           <AccordionContent>
@@ -149,7 +149,8 @@ export const OfficeList = ({ offices }: OfficesListProps) => {
                     />
                     <div className='flex justify-between'>
                       <Button
-                        leftAddon={<Icon as='pencil' size='md' />}
+                        className='px-0.5'
+                        leftAddon={<Icon as='pencil' size='lg' />}
                         onClick={() => toggleEditingOfficeById(office.id)}
                         size='sm'
                         variant='neutral'
@@ -157,7 +158,8 @@ export const OfficeList = ({ offices }: OfficesListProps) => {
                         Edit
                       </Button>
                       <Button
-                        leftAddon={<Icon as='trash' size='md' />}
+                        className='px-0.5'
+                        leftAddon={<Icon as='trash' size='lg' />}
                         onClick={() => deleteOfficeById(office.id)}
                         size='sm'
                         variant='attention'
