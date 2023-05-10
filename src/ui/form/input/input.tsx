@@ -56,7 +56,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               'cursor-not-allowed text-primary-grey outline-primary-grey',
             status === 'error' && 'text-accent-red outline-accent-red',
             status === 'default' &&
-              'text-primary-dark-blue outline-primary-dark-blue',
+              'text-primary-dark-blue outline-primary-grey',
           )}
         >
           <input
