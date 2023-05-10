@@ -1,6 +1,9 @@
 'use client'
 import { ComponentProps, forwardRef } from 'react'
+
 import * as RadixAccordionPrimitive from '@radix-ui/react-accordion'
+import clsx from 'clsx'
+
 import { Icon } from '@/ui/media'
 
 type RootProps = ComponentProps<typeof RadixAccordionPrimitive.Root>
@@ -16,10 +19,13 @@ const Root = ({ children, ...props }: RootProps) => {
 type TriggerProps = ComponentProps<typeof RadixAccordionPrimitive.Trigger>
 
 const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
-  ({ children, ...props }, forwardRef) => {
+  ({ children, className, ...props }, forwardRef) => {
     return (
       <RadixAccordionPrimitive.Trigger
-        className='group flex w-full items-center justify-between gap-6 rounded-lg p-6 outline-none transition data-[state=open]:rounded-b-none data-[state=open]:rounded-t-lg data-[state=open]:bg-primary-grey data-[state=open]:text-white data-[state=open]:shadow-base'
+        className={clsx(
+          'group flex w-full items-center justify-between gap-6 rounded-lg p-6 outline-none transition data-[state=open]:rounded-b-none data-[state=open]:rounded-t-lg data-[state=open]:bg-primary-grey data-[state=open]:text-white data-[state=open]:shadow-base',
+          className,
+        )}
         {...props}
         ref={forwardRef}
       >
@@ -47,9 +53,15 @@ const Content = ({ children, ...props }: ContentProps) => {
 
 type HeaderProps = RadixAccordionPrimitive.AccordionHeaderProps
 
-const Header = ({ children }: HeaderProps) => {
+const Header = ({ children, className, ...props }: HeaderProps) => {
   return (
-    <RadixAccordionPrimitive.Header className='text-2xl font-bold leading-9 text-primary-dark-blue data-[state=open]:text-white'>
+    <RadixAccordionPrimitive.Header
+      className={clsx(
+        'text-2xl font-bold leading-9 text-primary-dark-blue data-[state=open]:text-white',
+        className,
+      )}
+      {...props}
+    >
       {children}
     </RadixAccordionPrimitive.Header>
   )

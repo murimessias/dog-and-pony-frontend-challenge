@@ -6,7 +6,7 @@
     "plugin:prettier/recommended"
   ],
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["@typescript-eslint", "eslint-plugin-import-helpers"],
   "root": true,
   "rules": {
     "comma-dangle": [
@@ -17,6 +17,20 @@
         "imports": "always-multiline",
         "exports": "always-multiline",
         "functions": "always-multiline"
+      }
+    ],
+    "import-helpers/order-imports": [
+      "warn",
+      {
+        "alphabetize": { "order": "asc", "ignoreCase": true },
+        "groups": [
+          ["/^react$/", "/^next$/"],
+          "module",
+          ["/^@/ui/", "/^@/shared/"],
+          ["/^@/types/"],
+          ["parent", "sibling", "index"]
+        ],
+        "newlinesBetween": "always"
       }
     ],
     "no-undef": "off",

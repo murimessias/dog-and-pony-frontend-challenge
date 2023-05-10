@@ -1,11 +1,13 @@
 'use client'
 import { ComponentProps } from 'react'
+
 import clsx from 'clsx'
 
 type ButtonProps = {
   children: React.ReactNode
   fullWidth?: boolean
   leftAddon?: JSX.Element
+  rightAddon?: JSX.Element
   size?: 'sm' | 'base'
   variant?: 'primary' | 'neutral' | 'attention'
 } & ComponentProps<'button'>
@@ -14,6 +16,7 @@ export const Button = ({
   children,
   fullWidth = false,
   leftAddon,
+  rightAddon,
   size = 'base',
   variant = 'primary',
   ...props
@@ -38,6 +41,9 @@ export const Button = ({
         <div className='flex items-center justify-center'>{leftAddon}</div>
       )}
       <div>{children}</div>
+      {!!rightAddon && (
+        <div className='flex items-center justify-center'>{rightAddon}</div>
+      )}
     </button>
   )
 }

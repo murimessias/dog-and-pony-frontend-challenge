@@ -1,6 +1,6 @@
 'use client'
-import clsx from 'clsx'
 import * as RadixIconPrimitive from '@radix-ui/react-accessible-icon'
+import clsx from 'clsx'
 
 const icons = {
   add: (
