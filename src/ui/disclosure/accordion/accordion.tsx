@@ -53,13 +53,15 @@ const Content = ({ children, ...props }: ContentProps) => {
 
 type HeaderProps = RadixAccordionPrimitive.AccordionHeaderProps
 
-const Header = ({ children, className, ...props }: HeaderProps) => {
+const Header = ({ asChild, children, className, ...props }: HeaderProps) => {
   return (
     <RadixAccordionPrimitive.Header
-      className={clsx(
-        'text-2xl font-bold leading-9 text-primary-dark-blue data-[state=open]:text-white',
-        className,
-      )}
+      asChild={asChild}
+      {...(!asChild && {
+        className: clsx(
+          'text-2xl font-bold leading-9 data-[state=closed]:text-primary-dark-blue data-[state=open]:text-white',
+        ),
+      })}
       {...props}
     >
       {children}
