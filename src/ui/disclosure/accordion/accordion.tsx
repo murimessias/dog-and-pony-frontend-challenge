@@ -4,8 +4,6 @@ import { ComponentProps, forwardRef } from 'react'
 import * as RadixAccordionPrimitive from '@radix-ui/react-accordion'
 import clsx from 'clsx'
 
-import { Icon } from '@/ui/media'
-
 type RootProps = ComponentProps<typeof RadixAccordionPrimitive.Root>
 
 const Root = ({ children, ...props }: RootProps) => {
@@ -19,20 +17,19 @@ const Root = ({ children, ...props }: RootProps) => {
 type TriggerProps = ComponentProps<typeof RadixAccordionPrimitive.Trigger>
 
 const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
-  ({ children, className, ...props }, forwardRef) => {
+  ({ asChild, children, className, ...props }, forwardRef) => {
     return (
       <RadixAccordionPrimitive.Trigger
-        className={clsx(
-          'group flex w-full items-center justify-between gap-6 rounded-lg p-6 outline-none transition data-[state=open]:rounded-b-none data-[state=open]:rounded-t-lg data-[state=open]:bg-primary-grey data-[state=open]:text-white data-[state=open]:shadow-base',
-          className,
-        )}
+        asChild={asChild}
+        {...(!asChild && {
+          className: clsx(
+            'group flex w-full items-center justify-between gap-6 rounded-lg p-6 outline-none transition data-[state=open]:rounded-b-none data-[state=open]:rounded-t-lg data-[state=open]:bg-primary-grey data-[state=open]:text-white data-[state=open]:shadow-base',
+          ),
+        })}
         {...props}
         ref={forwardRef}
       >
-        <div className='text-left'>{children}</div>
-        <div className='text-accent-blue group-data-[state=open]:rotate-180 group-data-[state=open]:text-white'>
-          <Icon as='chevron-down' size='md' />
-        </div>
+        {children}
       </RadixAccordionPrimitive.Trigger>
     )
   },
