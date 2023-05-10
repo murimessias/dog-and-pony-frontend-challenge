@@ -1,70 +1,24 @@
-import { v4 as uuid } from 'uuid'
+import { faker } from '@faker-js/faker'
 
 import { OfficeList } from '@/shared/office'
 
-import { OfficeList as OfficeListType } from '@/types/office'
+const createFakeData = () => ({
+  id: faker.datatype.uuid(),
+  title: faker.company.name(),
+  address: faker.address.streetAddress(),
+  contact: {
+    name: faker.name.fullName(),
+    position: faker.name.jobTitle(),
+    email: faker.internet.email().toLowerCase(),
+    phone: faker.phone.number('(###) ###-####'),
+  },
+})
 
-const data: OfficeListType = [
-  {
-    id: uuid(),
-    title: 'Office 1',
-    address: 'office-address',
-    contact: {
-      name: 'Office Contact Name',
-      position: 'Office Position',
-      email: 'office@email.com',
-      phone: '(303) 444-5551',
-    },
-  },
-  {
-    id: uuid(),
-    title: 'Office 2',
-    address: 'office-address',
-    contact: {
-      name: 'Office Contact Name',
-      position: 'Office Position',
-      email: 'office@email.com',
-      phone: '(303) 444-5551',
-    },
-  },
-  {
-    id: uuid(),
-    title: 'Office 3',
-    address: 'office-address',
-    contact: {
-      name: 'Office Contact Name',
-      position: 'Office Position',
-      email: 'office@email.com',
-      phone: '(303) 444-5551',
-    },
-  },
-  {
-    id: uuid(),
-    title: 'Office 4',
-    address: 'office-address',
-    contact: {
-      name: 'Office Contact Name',
-      position: 'Office Position',
-      email: 'office@email.com',
-      phone: '(303) 444-5551',
-    },
-  },
-  {
-    id: uuid(),
-    title: 'Office 5',
-    address: 'office-address',
-    contact: {
-      name: 'Office Contact Name',
-      position: 'Office Position',
-      email: 'office@email.com',
-      phone: '(303) 444-5551',
-    },
-  },
-]
+const data = [createFakeData(), createFakeData(), createFakeData()]
 
 export default function Home() {
   return (
-    <main className='mx-auto flex h-screen w-full max-w-[320px] flex-col justify-center'>
+    <main className='mx-auto flex min-h-screen w-full max-w-[320px] flex-col justify-center py-10'>
       <OfficeList offices={data} />
     </main>
   )

@@ -1,9 +1,9 @@
 'use client'
 import { useState } from 'react'
 
+import { faker } from '@faker-js/faker'
 import * as RadixSeparatorPrimitive from '@radix-ui/react-separator'
 import clsx from 'clsx'
-import { v4 as uuid } from 'uuid'
 
 import {
   Accordion,
@@ -38,7 +38,7 @@ export const OfficeList = ({ offices }: OfficesListProps) => {
 
   // INFO: CRUD Actions
   const insertOffice = (data: OfficeWithoutId) => {
-    const newOfficeId = uuid()
+    const newOfficeId = faker.datatype.uuid()
     setCurrentOffices((prevOffices) =>
       prevOffices.concat({ ...data, id: newOfficeId, status: 'default' }),
     )

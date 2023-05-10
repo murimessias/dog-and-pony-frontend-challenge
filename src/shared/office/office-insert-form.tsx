@@ -1,7 +1,7 @@
 import { FormEvent, useState } from 'react'
 
+import { faker } from '@faker-js/faker'
 import * as RadixSeparatorPrimitive from '@radix-ui/react-separator'
-import { v4 as uuid } from 'uuid'
 
 import { Button, Input } from '@/ui/form'
 
@@ -27,7 +27,7 @@ export const OfficeInsertForm = ({ onSave }: OfficeInsertFormProps) => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    onSave({ ...formValues, id: uuid() })
+    onSave({ ...formValues, id: faker.datatype.uuid() })
     setFormValues(initialFormValues)
   }
 
