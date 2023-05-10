@@ -2,6 +2,7 @@
 import { useState } from 'react'
 
 import * as RadixSeparatorPrimitive from '@radix-ui/react-separator'
+import clsx from 'clsx'
 import { v4 as uuid } from 'uuid'
 
 import {
@@ -14,28 +15,17 @@ import {
 import { Button } from '@/ui/form'
 import { Icon } from '@/ui/media'
 
-import { Office } from '@/types/office'
+import { Office, OfficeWithoutId } from '@/types/office'
 
-import { OfficeEditForm } from './office-form'
+import { OfficeEditForm } from './office-edit-form'
 import { OfficeInfo } from './office-info'
+import { OfficeInsertForm } from './office-insert-form'
 
-type Status = 'default' | 'editing'
-type CurrentOffice = Office & { status: Status }
-type OfficeWithoutId = Omit<Office, 'id'>
+type CurrentOfficeStatus = 'default' | 'editing'
+type CurrentOffice = Office & { status: CurrentOfficeStatus }
 
 type OfficesListProps = {
   offices: Office[]
-}
-
-const newOfficeMock: OfficeWithoutId = {
-  title: 'Office Created',
-  address: 'office-address-created',
-  contact: {
-    name: 'Office Contact Name Created',
-    position: 'Office Position Created',
-    email: 'office@email-created.com',
-    phone: '(303) 444-5552',
-  },
 }
 
 export const OfficeList = ({ offices }: OfficesListProps) => {
@@ -98,19 +88,27 @@ export const OfficeList = ({ offices }: OfficesListProps) => {
 
   return (
     <div className='flex flex-col gap-8'>
-      <Button
-        fullWidth
-        onClick={() => insertOffice(newOfficeMock)}
-        rightAddon={<Icon as='add' />}
-      >
-        Add New Location
-      </Button>
       <Accordion
         collapsible
-        defaultValue='item-1'
-        onValueChange={() => resetEditingOffices()}
+        onValueChange={() => {
+          resetEditingOffices()
+        }}
         type='single'
       >
+        <AccordionItem value='new-location'>
+          <AccordionTrigger asChild>
+            <Button
+              className={clsx('h-14 justify-between rounded-lg px-6 py-4')}
+              fullWidth
+              rightAddon={<Icon as='add' />}
+            >
+              New Location
+            </Button>
+          </AccordionTrigger>
+          <AccordionContent>
+            <OfficeInsertForm onSave={(v) => insertOffice(v)} />
+          </AccordionContent>
+        </AccordionItem>
         {currentOffices.map((office) => {
           return (
             <AccordionItem key={office.id} value={office.id}>
@@ -133,50 +131,48 @@ export const OfficeList = ({ offices }: OfficesListProps) => {
                     </h3>
                   </AccordionHeader>
                   <Button
-                    variant='neutral'
-                    className='p-0'
                     onClick={() => toggleEditingOfficeById(office.id)}
+                    variant='neutral'
+                    size='sm'
                   >
                     <Icon as='cross' />
                   </Button>
                 </div>
               )}
               <AccordionContent>
-                <div className='flex flex-col gap-4'>
-                  {office.status === 'default' && (
-                    <>
-                      <OfficeInfo contact={office.contact} />
-                      <RadixSeparatorPrimitive.Root
-                        decorative
-                        className='bg-primary-light-grey data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full'
-                      />
-                      <div className='flex justify-between'>
-                        <Button
-                          onClick={() => toggleEditingOfficeById(office.id)}
-                          variant='neutral'
-                          size='sm'
-                          leftAddon={<Icon as='pencil' size='md' />}
-                        >
-                          Edit
-                        </Button>
-                        <Button
-                          onClick={() => deleteOfficeById(office.id)}
-                          variant='attention'
-                          size='sm'
-                          leftAddon={<Icon as='trash' size='md' />}
-                        >
-                          Delete
-                        </Button>
-                      </div>
-                    </>
-                  )}
-                  {office.status === 'editing' && (
-                    <OfficeEditForm
-                      office={office}
-                      onSave={(v) => editOfficeById(office.id)(v)}
+                {office.status === 'default' && (
+                  <div className='flex flex-col gap-4'>
+                    <OfficeInfo contact={office.contact} />
+                    <RadixSeparatorPrimitive.Root
+                      decorative
+                      className='bg-primary-light-grey data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full'
                     />
-                  )}
-                </div>
+                    <div className='flex justify-between'>
+                      <Button
+                        leftAddon={<Icon as='pencil' size='md' />}
+                        onClick={() => toggleEditingOfficeById(office.id)}
+                        size='sm'
+                        variant='neutral'
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        leftAddon={<Icon as='trash' size='md' />}
+                        onClick={() => deleteOfficeById(office.id)}
+                        size='sm'
+                        variant='attention'
+                      >
+                        Delete
+                      </Button>
+                    </div>
+                  </div>
+                )}
+                {office.status === 'editing' && (
+                  <OfficeEditForm
+                    office={office}
+                    onSave={(v) => editOfficeById(office.id)(v)}
+                  />
+                )}
               </AccordionContent>
             </AccordionItem>
           )
