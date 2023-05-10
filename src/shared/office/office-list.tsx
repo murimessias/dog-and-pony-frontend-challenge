@@ -149,7 +149,6 @@ export const OfficeList = ({ offices }: OfficesListProps) => {
                     />
                     <div className='flex justify-between'>
                       <Button
-                        className='px-0.5'
                         leftAddon={<Icon as='pencil' size='lg' />}
                         onClick={() => toggleEditingOfficeById(office.id)}
                         size='sm'
@@ -158,7 +157,6 @@ export const OfficeList = ({ offices }: OfficesListProps) => {
                         Edit
                       </Button>
                       <Button
-                        className='px-0.5'
                         leftAddon={<Icon as='trash' size='lg' />}
                         onClick={() => deleteOfficeById(office.id)}
                         size='sm'
