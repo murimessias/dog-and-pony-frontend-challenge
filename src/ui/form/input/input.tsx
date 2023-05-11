@@ -1,5 +1,5 @@
 'use client'
-import { ChangeEvent, forwardRef, InputHTMLAttributes, useState } from 'react'
+import { forwardRef, InputHTMLAttributes } from 'react'
 
 import * as Label from '@radix-ui/react-label'
 import clsx from 'clsx'
@@ -9,37 +9,16 @@ import { Icon } from '@/ui/media'
 type InputStatus = 'default' | 'error'
 
 type InputProps = {
-  initialValue?: string
   helperText?: string
   label?: string
   name: string
-  onInputChange?: (value: string) => void
   status?: InputStatus
 } & InputHTMLAttributes<HTMLInputElement>
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  (
-    {
-      helperText,
-      initialValue = '',
-      label,
-      name,
-      onInputChange,
-      status = 'default',
-      ...props
-    },
-    forwardRef,
-  ) => {
-    const [value, setValue] = useState(initialValue)
-
-    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-      const newValue = e.currentTarget.value
-      setValue(newValue)
-      !!onInputChange && onInputChange(newValue)
-    }
-
+  ({ helperText, label, name, status = 'default', ...props }, forwardRef) => {
     return (
-      <div className='flex flex-col gap-0.5 text-primary-dark-blue'>
+      <div className='relative flex flex-col gap-0.5 pb-2 text-primary-dark-blue'>
         {!!label && (
           <Label.Root
             className='inline-flex cursor-pointer gap-1 text-base text-primary-dark-blue'
@@ -65,19 +44,21 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               props.disabled && 'cursor-not-allowed text-primary-grey',
             )}
             name={name}
-            onChange={onChange}
             ref={forwardRef}
             type='text'
-            value={value}
             {...(label ? { id: name } : {})}
             {...props}
           />
-          {status === 'error' && <Icon as='warn' />}
+          {status === 'error' && (
+            <span className='text-accent-red'>
+              <Icon as='warn' />
+            </span>
+          )}
         </div>
         {!!helperText && (
           <small
             className={clsx(
-              'relative -bottom-1 text-xs',
+              'absolute -bottom-4 text-xs',
               status === 'error' && 'text-accent-red',
             )}
           >
