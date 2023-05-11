@@ -1,11 +1,12 @@
 import { z } from 'zod'
 
-import { PHONE_REGEX } from '@/utils/regex'
+import { NAME_REGEX, PHONE_REGEX } from '@/utils/regex'
 
 // Office Form Error Messages
-export const EMAIL_ERROR_MESSAGE = 'Please, provide a valid email'
-export const EMPTY_ERROR_MESSAGE = 'This field cannot be empty'
-export const PHONE_ERROR_MESSAGE = 'Plase, provide a valid phone (xxx) xxx-xxxx'
+const EMAIL_ERROR_MESSAGE = 'Please, provide a valid email'
+const EMPTY_ERROR_MESSAGE = 'This field cannot be empty'
+const INVALID_NAME_MESSAGE = 'Please, fill a full name. Ex: John Doe'
+const PHONE_ERROR_MESSAGE = 'Plase, provide a valid phone. Ex: (555) 555-5555'
 
 // Office Toast Messages
 export const DELETED_MESSAGE = 'The location has been deleted.'
@@ -21,9 +22,10 @@ export const officeFormShape = z.object({
     message: EMPTY_ERROR_MESSAGE,
   }),
   contact: z.object({
-    name: z.string().min(1, {
-      message: EMPTY_ERROR_MESSAGE,
-    }),
+    name: z
+      .string()
+      .min(2, { message: EMPTY_ERROR_MESSAGE })
+      .regex(NAME_REGEX, { message: INVALID_NAME_MESSAGE }),
     position: z.string().min(1, {
       message: EMPTY_ERROR_MESSAGE,
     }),
