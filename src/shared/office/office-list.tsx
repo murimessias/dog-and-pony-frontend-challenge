@@ -12,7 +12,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/ui/disclosure'
-import { Button } from '@/ui/form'
+import { Button, IconButton } from '@/ui/form'
 import { Icon } from '@/ui/media'
 
 import { Office, OfficeWithoutId } from '@/types/office'
@@ -130,13 +130,13 @@ export const OfficeList = ({ offices }: OfficesListProps) => {
                       Edit Location
                     </h3>
                   </AccordionHeader>
-                  <Button
+                  <IconButton
                     onClick={() => toggleEditingOfficeById(office.id)}
                     variant='neutral'
                     size='sm'
                   >
                     <Icon as='cross' />
-                  </Button>
+                  </IconButton>
                 </div>
               )}
               <AccordionContent>
