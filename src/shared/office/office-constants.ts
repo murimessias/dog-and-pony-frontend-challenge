@@ -5,7 +5,7 @@ import { PHONE_REGEX } from '@/utils/regex'
 // Form Error Messages
 export const EMAIL_ERROR_MESSAGE = 'Please, provide a valid email'
 export const EMPTY_ERROR_MESSAGE = 'This field cannot be empty'
-export const PHONE_ERROR_MESSAGE = 'Please, provide a valid phone number'
+export const PHONE_ERROR_MESSAGE = 'Plase, provide a valid phone (xxx) xxx-xxxx'
 
 // Insert & Edit Form Shape
 export const officeFormShape = z.object({
