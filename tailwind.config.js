@@ -57,8 +57,8 @@ module.exports = {
         },
       },
       animation: {
-        show: 'show 100ms ease-in',
-        hide: 'hide 100ms ease-in',
+        show: 'show 250ms ease-in',
+        hide: 'hide 250ms ease-out',
         slideDown: 'slideDown 300ms cubic-bezier(0.87, 0, 0.13, 1)',
         slideUp: 'slideUp 300ms cubic-bezier(0.87, 0, 0.13, 1)',
       },
