@@ -36,6 +36,7 @@ type OfficesListProps = {
 
 export const OfficeList = ({ offices }: OfficesListProps) => {
   const { toggle } = useToastActions()
+  const [isInserting, setIsInserting] = useState(false)
 
   const initialOffices: CurrentOffice[] = offices.map((office) => ({
     ...office,
@@ -98,21 +99,40 @@ export const OfficeList = ({ offices }: OfficesListProps) => {
     <div className='flex flex-col gap-8'>
       <Accordion
         collapsible
-        onValueChange={() => {
+        onValueChange={(value) => {
+          if (value !== 'new-location') setIsInserting(false)
           resetEditingOffices()
         }}
         type='single'
       >
         <AccordionItem value='new-location'>
-          <AccordionTrigger asChild>
-            <Button
-              className={clsx('h-14 justify-between rounded-lg px-6 py-4')}
-              fullWidth
-              rightAddon={<Icon as='add' />}
-            >
-              Add New Location
-            </Button>
-          </AccordionTrigger>
+          {!isInserting ? (
+            <AccordionTrigger asChild>
+              <Button
+                className={clsx('h-14 justify-between rounded-lg px-6 py-4')}
+                fullWidth
+                onClick={() => setIsInserting(true)}
+                rightAddon={<Icon as='add' />}
+              >
+                Add New Location
+              </Button>
+            </AccordionTrigger>
+          ) : (
+            <div className='flex items-center justify-between p-6'>
+              <h3 className='text-xl font-bold text-primary-dark-blue'>
+                New Location
+              </h3>
+              <AccordionTrigger asChild>
+                <IconButton
+                  onClick={() => setIsInserting(false)}
+                  size='sm'
+                  variant='neutral'
+                >
+                  <Icon as='cross' />
+                </IconButton>
+              </AccordionTrigger>
+            </div>
+          )}
           <AccordionContent>
             <OfficeInsertForm onInsert={insertOffice} />
           </AccordionContent>
@@ -138,13 +158,15 @@ export const OfficeList = ({ offices }: OfficesListProps) => {
                       Edit Location
                     </h3>
                   </AccordionHeader>
-                  <IconButton
-                    onClick={() => toggleEditingOfficeById(office.id)}
-                    variant='neutral'
-                    size='sm'
-                  >
-                    <Icon as='cross' />
-                  </IconButton>
+                  <AccordionTrigger asChild>
+                    <IconButton
+                      onClick={() => toggleEditingOfficeById(office.id)}
+                      size='sm'
+                      variant='neutral'
+                    >
+                      <Icon as='cross' />
+                    </IconButton>
+                  </AccordionTrigger>
                 </div>
               )}
               <AccordionContent>
@@ -152,8 +174,8 @@ export const OfficeList = ({ offices }: OfficesListProps) => {
                   <div className='flex flex-col gap-4'>
                     <OfficeInfo contact={office.contact} />
                     <RadixSeparatorPrimitive.Root
-                      decorative
                       className='bg-primary-light-grey data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full'
+                      decorative
                     />
                     <div className='flex justify-between'>
                       <Button
