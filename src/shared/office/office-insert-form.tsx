@@ -2,7 +2,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import * as RadixSeparatorPrimitive from '@radix-ui/react-separator'
 import { Controller, useForm } from 'react-hook-form'
 import { v4 as uuid } from 'uuid'
-import { z } from 'zod'
 
 import { Button, Input } from '@/ui/form'
 
@@ -10,47 +9,16 @@ import { formatToPhone } from '@/utils/formatters'
 
 import { Office, OfficeWithoutId } from '@/types/office'
 
-type OfficeInsertFormProps = {
-  onInsert: (v: Office) => void
-}
-
-// Messages
-const EMPTY_ERROR_MESSAGE = 'This field cannot be empty'
-const EMAIL_ERROR_MESSAGE = 'Please, provide a valid email'
-const PHONE_ERROR_MESSAGE = 'Please, provide a valid phone number'
-
-// Regex
-const PHONE_PATTERN = /^\(\d{3}\)\s\d{3}[-]\d{4}/g
-
-const insertFormShape = z.object({
-  title: z.string().min(1, {
-    message: EMPTY_ERROR_MESSAGE,
-  }),
-  address: z.string().min(1, {
-    message: EMPTY_ERROR_MESSAGE,
-  }),
-  contact: z.object({
-    name: z.string().min(1, {
-      message: EMPTY_ERROR_MESSAGE,
-    }),
-    position: z.string().min(1, {
-      message: EMPTY_ERROR_MESSAGE,
-    }),
-    email: z
-      .string()
-      .min(1, { message: EMPTY_ERROR_MESSAGE })
-      .email({ message: EMAIL_ERROR_MESSAGE }),
-    phone: z
-      .string()
-      .min(1, { message: EMPTY_ERROR_MESSAGE })
-      .regex(PHONE_PATTERN, { message: PHONE_ERROR_MESSAGE }),
-  }),
-})
+import { hasValidationError, officeFormShape } from './office-constants'
 
 const initialFormValues: OfficeWithoutId = {
   title: '',
   address: '',
   contact: { name: '', position: '', email: '', phone: '' },
+}
+
+type OfficeInsertFormProps = {
+  onInsert: (v: Office) => void
 }
 
 export const OfficeInsertForm = ({ onInsert }: OfficeInsertFormProps) => {
@@ -61,7 +29,7 @@ export const OfficeInsertForm = ({ onInsert }: OfficeInsertFormProps) => {
     register,
   } = useForm({
     defaultValues: initialFormValues,
-    resolver: zodResolver(insertFormShape),
+    resolver: zodResolver(officeFormShape),
   })
 
   return (
@@ -123,14 +91,17 @@ export const OfficeInsertForm = ({ onInsert }: OfficeInsertFormProps) => {
               {...field}
               onChange={(e) => {
                 const value = e.currentTarget.value
-                field.onChange(formatToPhone(value))
+                const formattedValueAsPhone = formatToPhone(value)
+                field.onChange(formattedValueAsPhone)
               }}
               value={field.value}
             />
           )}
         />
       </div>
-      <Button type='submit'>Save</Button>
+      <Button disabled={hasValidationError(errors)} type='submit'>
+        Save
+      </Button>
     </form>
   )
 }
