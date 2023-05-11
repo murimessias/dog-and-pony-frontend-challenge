@@ -39,14 +39,18 @@ export const OfficeInsertForm = ({ onInsert }: OfficeInsertFormProps) => {
     >
       <div className='flex flex-col gap-6'>
         <Input
+          aria-invalid={errors.title ? 'true' : 'false'}
           helperText={errors.title?.message}
           label='Title'
+          required
           status={errors.title && 'error'}
           {...register('title')}
         />
         <Input
+          aria-invalid={errors.address ? 'true' : 'false'}
           helperText={errors.address?.message}
-          label='Enter the Address'
+          label='Enter the address'
+          required
           status={errors.address && 'error'}
           {...register('address')}
         />
@@ -62,20 +66,27 @@ export const OfficeInsertForm = ({ onInsert }: OfficeInsertFormProps) => {
       </div>
       <div className='flex flex-col gap-6'>
         <Input
+          aria-invalid={errors.contact?.name ? 'true' : 'false'}
           helperText={errors.contact?.name?.message}
           label='Full name'
+          required
           status={errors.contact?.name && 'error'}
           {...register('contact.name')}
         />
         <Input
+          aria-invalid={errors.contact?.position ? 'true' : 'false'}
           helperText={errors.contact?.position?.message}
           label='Job Position'
+          required
           status={errors.contact?.position && 'error'}
           {...register('contact.position')}
         />
         <Input
+          aria-invalid={errors.contact?.email ? 'true' : 'false'}
           helperText={errors.contact?.email?.message}
           label='Email address'
+          placeholder='name@example.com'
+          required
           status={errors.contact?.email && 'error'}
           {...register('contact.email')}
         />
@@ -84,9 +95,12 @@ export const OfficeInsertForm = ({ onInsert }: OfficeInsertFormProps) => {
           control={control}
           render={({ field }) => (
             <Input
+              aria-invalid={errors.contact?.phone ? 'true' : 'false'}
               helperText={errors.contact?.phone?.message}
               label='Phone'
+              placeholder='(xxx) xxx-xxxx'
               maxLength={14}
+              required
               status={errors.contact?.phone && 'error'}
               {...field}
               onChange={(e) => {
