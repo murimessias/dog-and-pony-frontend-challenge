@@ -1,42 +1,78 @@
-import { useState } from 'react'
-
+import { zodResolver } from '@hookform/resolvers/zod'
 import * as RadixSeparatorPrimitive from '@radix-ui/react-separator'
+import { Controller, useForm } from 'react-hook-form'
+import { z } from 'zod'
 
 import { Button, Input } from '@/ui/form'
+
+import { formatToPhone } from '@/utils/formatters'
 
 import { Office } from '@/types/office'
 
 type OfficeEditFormProps = {
   office: Office
-  onSave: (v: Office) => void
+  onEdit: (v: Office) => void
 }
 
-export const OfficeEditForm = ({ office, onSave }: OfficeEditFormProps) => {
-  const [formValues, setFormValues] = useState<Office>(office)
+// Messages
+const EMPTY_ERROR_MESSAGE = 'This field cannot be empty'
+const EMAIL_ERROR_MESSAGE = 'Please, provide a valid email'
+const PHONE_ERROR_MESSAGE = 'Please, provide a valid phone number'
+
+// Regex
+const PHONE_PATTERN = /^\(\d{3}\)\s\d{3}[-]\d{4}/g
+
+// Form Shape
+const insertFormShape = z.object({
+  title: z.string().min(1, {
+    message: EMPTY_ERROR_MESSAGE,
+  }),
+  address: z.string().min(1, {
+    message: EMPTY_ERROR_MESSAGE,
+  }),
+  contact: z.object({
+    name: z.string().min(1, {
+      message: EMPTY_ERROR_MESSAGE,
+    }),
+    position: z.string().min(1, {
+      message: EMPTY_ERROR_MESSAGE,
+    }),
+    email: z
+      .string()
+      .min(1, { message: EMPTY_ERROR_MESSAGE })
+      .email({ message: EMAIL_ERROR_MESSAGE }),
+    phone: z
+      .string()
+      .min(1, { message: EMPTY_ERROR_MESSAGE })
+      .regex(PHONE_PATTERN, { message: PHONE_ERROR_MESSAGE }),
+  }),
+})
+
+export const OfficeEditForm = ({ office, onEdit }: OfficeEditFormProps) => {
+  const {
+    control,
+    formState: { errors },
+    handleSubmit,
+    register,
+  } = useForm({
+    defaultValues: office,
+    resolver: zodResolver(insertFormShape),
+  })
 
   return (
-    <form
-      className='flex flex-col gap-6'
-      onSubmit={(e) => {
-        e.preventDefault()
-        onSave(formValues)
-      }}
-    >
+    <form className='flex flex-col gap-6' onSubmit={handleSubmit(onEdit)}>
       <div className='flex flex-col gap-6'>
         <Input
-          initialValue={formValues.title}
+          helperText={errors.title?.message}
           label='Title'
-          name='title'
-          onInputChange={(e) => setFormValues((v) => ({ ...v, title: e }))}
-          required
-          value={formValues.title}
+          status={errors.title && 'error'}
+          {...register('title')}
         />
         <Input
-          initialValue={formValues.address}
+          helperText={errors.address?.message}
           label='Enter the Address'
-          name='address'
-          onInputChange={(e) => setFormValues((v) => ({ ...v, address: e }))}
-          required
+          status={errors.address && 'error'}
+          {...register('address')}
         />
       </div>
       <div>
@@ -50,52 +86,40 @@ export const OfficeEditForm = ({ office, onSave }: OfficeEditFormProps) => {
       </div>
       <div className='flex flex-col gap-6'>
         <Input
-          initialValue={formValues.contact.name}
+          helperText={errors.contact?.name?.message}
           label='Full name'
-          name='full-name'
-          onInputChange={(e) =>
-            setFormValues((v) => ({
-              ...v,
-              contact: { ...v.contact, name: e },
-            }))
-          }
-          required
+          status={errors.contact?.name && 'error'}
+          {...register('contact.name')}
         />
         <Input
-          initialValue={formValues.contact.position}
+          helperText={errors.contact?.position?.message}
           label='Job Position'
-          name='position'
-          onInputChange={(e) =>
-            setFormValues((v) => ({
-              ...v,
-              contact: { ...v.contact, position: e },
-            }))
-          }
-          required
+          status={errors.contact?.position && 'error'}
+          {...register('contact.position')}
         />
         <Input
-          initialValue={formValues.contact.email}
+          helperText={errors.contact?.email?.message}
           label='Email address'
-          name='email'
-          onInputChange={(e) =>
-            setFormValues((v) => ({
-              ...v,
-              contact: { ...v.contact, email: e },
-            }))
-          }
-          required
+          status={errors.contact?.email && 'error'}
+          {...register('contact.email')}
         />
-        <Input
-          initialValue={formValues.contact.phone}
-          label='Phone'
-          name='phone'
-          onInputChange={(e) =>
-            setFormValues((v) => ({
-              ...v,
-              contact: { ...v.contact, phone: e },
-            }))
-          }
-          required
+        <Controller
+          name='contact.phone'
+          control={control}
+          render={({ field }) => (
+            <Input
+              helperText={errors.contact?.phone?.message}
+              label='Phone'
+              maxLength={14}
+              status={errors.contact?.phone && 'error'}
+              {...field}
+              onChange={(e) => {
+                const value = e.currentTarget.value
+                field.onChange(formatToPhone(value))
+              }}
+              value={field.value}
+            />
+          )}
         />
       </div>
       <Button type='submit'>Save</Button>

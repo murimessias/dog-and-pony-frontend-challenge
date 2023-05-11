@@ -106,7 +106,7 @@ export const OfficeList = ({ offices }: OfficesListProps) => {
             </Button>
           </AccordionTrigger>
           <AccordionContent>
-            <OfficeInsertForm onSave={(v) => insertOffice(v)} />
+            <OfficeInsertForm onInsert={insertOffice} />
           </AccordionContent>
         </AccordionItem>
         {currentOffices.map((office) => {
@@ -170,7 +170,7 @@ export const OfficeList = ({ offices }: OfficesListProps) => {
                 {office.status === 'editing' && (
                   <OfficeEditForm
                     office={office}
-                    onSave={(v) => editOfficeById(office.id)(v)}
+                    onEdit={(v) => editOfficeById(office.id)(v)}
                   />
                 )}
               </AccordionContent>

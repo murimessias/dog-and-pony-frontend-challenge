@@ -27,6 +27,7 @@
           ["/^react$/", "/^next$/"],
           "module",
           ["/^@/ui/", "/^@/shared/"],
+          ["/^@/utils/", "/^@/contants/"],
           ["/^@/types/"],
           ["parent", "sibling", "index"]
         ],
