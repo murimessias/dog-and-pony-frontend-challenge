@@ -1,4 +1,3 @@
-'use client'
 import { forwardRef, InputHTMLAttributes } from 'react'
 
 import * as Label from '@radix-ui/react-label'
@@ -12,20 +11,24 @@ type InputProps = {
   helperText?: string
   label?: string
   name: string
+  required?: boolean
   status?: InputStatus
 } & InputHTMLAttributes<HTMLInputElement>
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ helperText, label, name, status = 'default', ...props }, forwardRef) => {
+  (
+    { helperText, label, name, status = 'default', required, ...props },
+    forwardRef,
+  ) => {
     return (
-      <div className='relative flex flex-col gap-0.5 pb-2 text-primary-dark-blue'>
+      <div className='relative flex flex-col gap-1 pb-2 text-primary-dark-blue'>
         {!!label && (
           <Label.Root
-            className='inline-flex cursor-pointer gap-1 text-base text-primary-dark-blue'
+            className='inline-flex cursor-pointer gap-1 self-start text-base text-primary-dark-blue'
             htmlFor={name}
           >
             {label}
-            {props.required && <span className='text-primary-grey'>*</span>}
+            {required && <span className='text-primary-grey'>*</span>}
           </Label.Root>
         )}
         <div
@@ -50,9 +53,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             {...props}
           />
           {status === 'error' && (
-            <span className='text-accent-red'>
-              <Icon as='warn' />
-            </span>
+            <div className='inline-flex items-center justify-center text-accent-red'>
+              <Icon as='warn' size='md' />
+            </div>
           )}
         </div>
         {!!helperText && (
