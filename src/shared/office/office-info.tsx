@@ -1,3 +1,5 @@
+import { ExternalLink } from '@/ui/navigation'
+
 import { OfficeContact } from '@/types/office'
 
 type OfficeInfoProps = {
@@ -11,9 +13,9 @@ export const OfficeInfo = ({ contact }: OfficeInfoProps) => {
         {contact.name}
       </h3>
       <span className='text-primary-dark-blue'>{contact.position}</span>
-      <a href={`mailto:${contact.email}`} className='text-accent-blue'>
+      <ExternalLink href={`mailto:${contact.email}`}>
         {contact.email}
-      </a>
+      </ExternalLink>
       <span className='text-primary-dark-blue'>{contact.phone}</span>
     </div>
   )

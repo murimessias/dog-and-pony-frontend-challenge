@@ -1,6 +1,7 @@
 import { faker } from '@faker-js/faker'
 
 import { OfficeList } from '@/shared/office'
+import { ExternalLink } from '@/ui/navigation'
 
 const createFakeData = () => ({
   id: faker.datatype.uuid(),
@@ -32,16 +33,16 @@ export const OfficesLayout = () => {
       <section className='py-6'>
         <OfficeList offices={data} />
       </section>
-      <footer className='flex flex-col gap-2 text-center'>
-        <span className='block'>This project is for test purpose only.</span>
-        <a
-          className='text-xs uppercase leading-none tracking-wide text-accent-blue'
-          href='https://www.dogandponystudios.com'
-          rel='noopener noreferrer'
-          target='_blank'
+      <footer className='flex flex-col items-center gap-2'>
+        <span className='block text-center'>
+          This project is for test purpose only.
+        </span>
+        <ExternalLink
+          className='text-center text-xs uppercase leading-none tracking-wide '
+          href='https://www.dogandponystudios.com/'
         >
           www.dogandponystudios.com
-        </a>
+        </ExternalLink>
       </footer>
     </main>
   )
