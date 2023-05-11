@@ -1,8 +1,9 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import * as RadixSeparatorPrimitive from '@radix-ui/react-separator'
 import clsx from 'clsx'
+import localforage from 'localforage'
 import { v4 as uuid } from 'uuid'
 
 import {
@@ -27,35 +28,46 @@ import { OfficeEditForm } from './office-edit-form'
 import { OfficeInfo } from './office-info'
 import { OfficeInsertForm } from './office-insert-form'
 
-type CurrentOfficeStatus = 'default' | 'editing'
-type CurrentOffice = Office & { status: CurrentOfficeStatus }
+type OfficeStatus = 'default' | 'editing'
+type OfficeWithStatus = Office & { status: OfficeStatus }
 
-type OfficesListProps = {
-  offices: Office[]
-}
-
-export const OfficeList = ({ offices }: OfficesListProps) => {
-  const { toggle } = useToastActions()
+export const OfficeList = () => {
+  const [offices, setOffices] = useState<OfficeWithStatus[]>([])
   const [isInserting, setIsInserting] = useState(false)
+  const { toggle } = useToastActions()
 
-  const initialOffices: CurrentOffice[] = offices.map((office) => ({
-    ...office,
-    status: 'default',
-  }))
+  useEffect(() => {
+    localforage.setItem('offices', offices)
+  }, [offices])
 
-  const [currentOffices, setCurrentOffices] = useState(initialOffices)
+  useEffect(() => {
+    const getLocalStorage = async () => {
+      const localStorageOffices = await localforage.getItem<Office[]>('offices')
+      if (localStorageOffices) {
+        setOffices(
+          localStorageOffices.map((office) => ({
+            ...office,
+            status: 'default',
+          })),
+        )
+        return
+      }
+    }
+
+    getLocalStorage()
+  }, [])
 
   // INFO: CRUD Actions
   const insertOffice = (data: OfficeWithoutId) => {
     const newOfficeId = uuid()
-    setCurrentOffices((prevOffices) =>
+    setOffices((prevOffices) =>
       prevOffices.concat({ ...data, id: newOfficeId, status: 'default' }),
     )
     toggle(true)(INSERTED_MESSAGE)
   }
 
   const editOfficeById = (id: string) => (data: OfficeWithoutId) => {
-    setCurrentOffices((prevOffices) =>
+    setOffices((prevOffices) =>
       prevOffices.map((prevOffice) => {
         if (prevOffice.id === id) {
           return { ...data, id: prevOffice.id, status: 'default' }
@@ -67,15 +79,15 @@ export const OfficeList = ({ offices }: OfficesListProps) => {
   }
 
   const deleteOfficeById = (id: string) => {
-    setCurrentOffices((prevOffices) => {
-      return prevOffices.filter((prevOffice) => prevOffice.id !== id)
-    })
+    setOffices((prevOffices) =>
+      prevOffices.filter((prevOffice) => prevOffice.id !== id),
+    )
     toggle(true)(DELETED_MESSAGE)
   }
 
   // INFO: Edit Status Actions
   const toggleEditingOfficeById = (id: string) => {
-    setCurrentOffices((prevOffices) => {
+    setOffices((prevOffices) => {
       return prevOffices.map((prevOffice) => {
         if (prevOffice.id === id) {
           const isEditing = prevOffice.status === 'editing'
@@ -87,7 +99,7 @@ export const OfficeList = ({ offices }: OfficesListProps) => {
   }
 
   const resetEditingOffices = () => {
-    setCurrentOffices((prevOffices) => {
+    setOffices((prevOffices) => {
       return prevOffices.map((prevOffice) => ({
         ...prevOffice,
         status: 'default',
@@ -137,7 +149,7 @@ export const OfficeList = ({ offices }: OfficesListProps) => {
             <OfficeInsertForm onInsert={insertOffice} />
           </AccordionContent>
         </AccordionItem>
-        {currentOffices.map((office) => {
+        {offices.map((office) => {
           return (
             <AccordionItem key={office.id} value={office.id}>
               {office.status === 'default' && (

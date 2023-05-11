@@ -1,27 +1,6 @@
-import { faker } from '@faker-js/faker'
-
 import { OfficeList } from '@/shared/office'
 import { ExternalLink } from '@/ui/navigation'
 import { Toast, ToastProvider } from '@/ui/overlay'
-
-const createFakeData = () => ({
-  id: faker.datatype.uuid(),
-  title: faker.company.name(),
-  address: faker.address.streetAddress(),
-  contact: {
-    name: faker.name.fullName(),
-    position: faker.name.jobTitle(),
-    email: faker.internet.email().toLowerCase(),
-    phone: faker.phone.number('(###) ###-####'),
-  },
-})
-
-const data = [
-  createFakeData(),
-  createFakeData(),
-  createFakeData(),
-  createFakeData(),
-]
 
 export const OfficesLayout = () => {
   return (
@@ -34,7 +13,7 @@ export const OfficesLayout = () => {
           </h1>
         </header>
         <section className='py-6'>
-          <OfficeList offices={data} />
+          <OfficeList />
         </section>
         <footer className='flex flex-col items-center gap-2'>
           <span className='block text-center'>
