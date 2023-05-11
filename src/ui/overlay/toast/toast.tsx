@@ -10,7 +10,11 @@ type ToastProviderProps = RadixToastPrimitive.ToastProps
 
 export const ToastProvider = ({ children, ...props }: ToastProviderProps) => {
   return (
-    <RadixToastPrimitive.Provider swipeDirection='up' {...props}>
+    <RadixToastPrimitive.Provider
+      duration={3000}
+      swipeDirection='up'
+      {...props}
+    >
       {children}
       <RadixToastPrimitive.Viewport className='fixed right-0 top-0 z-40 m-0 flex h-20 w-full max-w-[100vw] outline-none' />
     </RadixToastPrimitive.Provider>
