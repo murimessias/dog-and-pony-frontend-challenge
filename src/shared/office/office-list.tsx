@@ -1,9 +1,9 @@
 'use client'
 import { useState } from 'react'
 
-import { faker } from '@faker-js/faker'
 import * as RadixSeparatorPrimitive from '@radix-ui/react-separator'
 import clsx from 'clsx'
+import { v4 as uuid } from 'uuid'
 
 import {
   Accordion,
@@ -14,9 +14,15 @@ import {
 } from '@/ui/disclosure'
 import { Button, IconButton } from '@/ui/form'
 import { Icon } from '@/ui/media'
+import { useToastActions } from '@/ui/overlay'
 
 import { Office, OfficeWithoutId } from '@/types/office'
 
+import {
+  DELETED_MESSAGE,
+  INSERTED_MESSAGE,
+  UPDATED_MESSAGE,
+} from './office-constants'
 import { OfficeEditForm } from './office-edit-form'
 import { OfficeInfo } from './office-info'
 import { OfficeInsertForm } from './office-insert-form'
@@ -29,6 +35,8 @@ type OfficesListProps = {
 }
 
 export const OfficeList = ({ offices }: OfficesListProps) => {
+  const { toggle } = useToastActions()
+
   const initialOffices: CurrentOffice[] = offices.map((office) => ({
     ...office,
     status: 'default',
@@ -38,11 +46,11 @@ export const OfficeList = ({ offices }: OfficesListProps) => {
 
   // INFO: CRUD Actions
   const insertOffice = (data: OfficeWithoutId) => {
-    const newOfficeId = faker.datatype.uuid()
+    const newOfficeId = uuid()
     setCurrentOffices((prevOffices) =>
       prevOffices.concat({ ...data, id: newOfficeId, status: 'default' }),
     )
-    alert(`${newOfficeId} - Office Inserted`)
+    toggle(true)(INSERTED_MESSAGE)
   }
 
   const editOfficeById = (id: string) => (data: OfficeWithoutId) => {
@@ -54,14 +62,14 @@ export const OfficeList = ({ offices }: OfficesListProps) => {
         return prevOffice
       }),
     )
-    alert(`${id} - Office Edited`)
+    toggle(true)(UPDATED_MESSAGE)
   }
 
   const deleteOfficeById = (id: string) => {
     setCurrentOffices((prevOffices) => {
       return prevOffices.filter((prevOffice) => prevOffice.id !== id)
     })
-    alert(`${id} - Office Deleted`)
+    toggle(true)(DELETED_MESSAGE)
   }
 
   // INFO: Edit Status Actions

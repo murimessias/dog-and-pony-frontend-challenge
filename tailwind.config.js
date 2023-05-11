@@ -39,6 +39,14 @@ module.exports = {
           '0px 2px 4px -5px rgba(0, 0, 0, 0.06), 0px 4px 6px rgba(0, 0, 0, 0.1)',
       },
       keyframes: {
+        hide: {
+          from: { opacity: 1 },
+          to: { opacity: 0 },
+        },
+        show: {
+          from: { opacity: 0 },
+          to: { opacity: 1 },
+        },
         slideDown: {
           from: { height: 0 },
           to: { height: 'var(--radix-accordion-content-height)' },
@@ -49,6 +57,8 @@ module.exports = {
         },
       },
       animation: {
+        show: 'show 100ms ease-in',
+        hide: 'hide 100ms ease-in',
         slideDown: 'slideDown 300ms cubic-bezier(0.87, 0, 0.13, 1)',
         slideUp: 'slideUp 300ms cubic-bezier(0.87, 0, 0.13, 1)',
       },
