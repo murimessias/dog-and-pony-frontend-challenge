@@ -121,7 +121,7 @@ export const OfficeList = () => {
         {!isCollapsibleOpen ? (
           <CollapsibleTrigger asChild>
             <Button
-              className={clsx('h-14 justify-between rounded-lg px-6 py-4')}
+              className={clsx('h-14 justify-between rounded-lg px-6')}
               fullWidth
               rightAddon={<Icon as='add' />}
             >
@@ -129,7 +129,7 @@ export const OfficeList = () => {
             </Button>
           </CollapsibleTrigger>
         ) : (
-          <div className='flex items-center justify-between rounded-lg bg-white p-6'>
+          <div className='flex items-center justify-between rounded-lg bg-white px-6 py-4'>
             <h3 className='text-xl font-bold text-primary-dark-blue'>
               New Location
             </h3>
@@ -165,7 +165,7 @@ export const OfficeList = () => {
                 </AccordionTrigger>
               )}
               {office.status === 'editing' && (
-                <div className='flex items-center justify-between p-6'>
+                <div className='flex items-center justify-between px-6 py-4'>
                   <AccordionHeader asChild>
                     <h3 className='text-xl font-bold text-primary-dark-blue'>
                       Edit Location
