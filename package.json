@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "build": "next build",
+    "ci": "yarn lint && yarn type-check",
     "dev": "next dev",
     "lint": "eslint src --max-warnings=0",
     "lint:fix": "yarn lint --fix",

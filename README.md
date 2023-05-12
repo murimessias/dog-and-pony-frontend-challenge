@@ -26,6 +26,7 @@ The project was developed with following libraries:
 - Code formatting with **[Prettier](https://prettier.io)**
 - Git hook with **[Husky](https://github.com/typicode/husky)**
 - **[Lint Staged](https://github.com/okonet/lint-staged)** to check staged files before commits
+- Automated workflow to production with **[GitHub Actions](https://github.com/features/actions)**
 - Static Types with **[Typescript](https://www.typescriptlang.org)**
 - Runtime schema validation with **[Zod](https://zod.dev)**
 
