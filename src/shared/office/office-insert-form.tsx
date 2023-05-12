@@ -83,10 +83,12 @@ export const OfficeInsertForm = ({ onInsert }: OfficeInsertFormProps) => {
         />
         <Input
           aria-invalid={errors.contact?.email ? 'true' : 'false'}
+          autoCapitalize='off'
           helperText={errors.contact?.email?.message}
           label='Email address'
           placeholder='name@example.com'
           required
+          spellCheck='false'
           status={errors.contact?.email && 'error'}
           {...register('contact.email')}
         />
@@ -96,11 +98,14 @@ export const OfficeInsertForm = ({ onInsert }: OfficeInsertFormProps) => {
           render={({ field }) => (
             <Input
               aria-invalid={errors.contact?.phone ? 'true' : 'false'}
+              autoComplete='off'
+              autoCorrect='off'
               helperText={errors.contact?.phone?.message}
               label='Phone'
-              placeholder='(xxx) xxx-xxxx'
               maxLength={14}
+              placeholder='(xxx) xxx-xxxx'
               required
+              spellCheck='false'
               status={errors.contact?.phone && 'error'}
               {...field}
               onChange={(e) => {
