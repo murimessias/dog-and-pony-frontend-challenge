@@ -5,8 +5,8 @@ import { NAME_REGEX, PHONE_REGEX } from '@/utils/regex'
 // Office Form Error Messages
 const EMAIL_ERROR_MESSAGE = 'Please, provide a valid email'
 const EMPTY_ERROR_MESSAGE = 'This field cannot be empty'
-const INVALID_NAME_MESSAGE = 'Please, fill a full name. Ex: John Doe'
-const PHONE_ERROR_MESSAGE = 'Plase, provide a valid phone. Ex: (555) 555-5555'
+const INVALID_NAME_MESSAGE = 'Please, fill a full name. E.g.: John Doe'
+const PHONE_ERROR_MESSAGE = 'Plase, provide a valid phone. E.g.: (555) 555-5555'
 
 // Office Toast Messages
 export const DELETED_MESSAGE = 'The location has been deleted.'
