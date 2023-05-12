@@ -33,12 +33,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         )}
         <div
           className={clsx(
-            'flex min-h-[2.5rem] items-center rounded bg-white px-3 shadow-micro outline outline-2 transition focus-within:outline-accent-blue',
+            'flex min-h-[2.5rem] items-center rounded border-2 bg-white px-3 shadow-micro transition focus-within:border-accent-blue',
             props.disabled &&
-              'cursor-not-allowed text-primary-grey outline-primary-grey',
-            status === 'error' && 'text-accent-red outline-accent-red',
+              'cursor-not-allowed border-primary-grey text-primary-grey',
+            status === 'error' && 'border-accent-red text-accent-red',
             status === 'default' &&
-              'text-primary-dark-blue outline-primary-grey',
+              'border-primary-grey text-primary-dark-blue',
           )}
         >
           <input
