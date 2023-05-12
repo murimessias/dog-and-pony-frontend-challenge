@@ -12,6 +12,9 @@ import {
   AccordionHeader,
   AccordionItem,
   AccordionTrigger,
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
 } from '@/ui/disclosure'
 import { Button, IconButton } from '@/ui/form'
 import { Icon } from '@/ui/media'
@@ -32,8 +35,8 @@ type OfficeStatus = 'default' | 'editing'
 type OfficeWithStatus = Office & { status: OfficeStatus }
 
 export const OfficeList = () => {
+  const [isCollapsibleOpen, setIsCollapsibleOpen] = useState(false)
   const [offices, setOffices] = useState<OfficeWithStatus[]>([])
-  const [isInserting, setIsInserting] = useState(false)
   const { toggle } = useToastActions()
 
   useEffect(() => {
@@ -107,48 +110,46 @@ export const OfficeList = () => {
     })
   }
 
+  const onChangeAccordion = () => {
+    resetEditingOffices()
+    setIsCollapsibleOpen(false)
+  }
+
   return (
     <div className='flex flex-col gap-8'>
-      <Accordion
-        collapsible
-        onValueChange={(value) => {
-          if (value !== 'new-location') setIsInserting(false)
-          resetEditingOffices()
-        }}
-        type='single'
-      >
-        <AccordionItem value='new-location'>
-          {!isInserting ? (
-            <AccordionTrigger asChild>
-              <Button
-                className={clsx('h-14 justify-between rounded-lg px-6 py-4')}
-                fullWidth
-                onClick={() => setIsInserting(true)}
-                rightAddon={<Icon as='add' />}
-              >
-                Add New Location
-              </Button>
-            </AccordionTrigger>
-          ) : (
-            <div className='flex items-center justify-between p-6'>
-              <h3 className='text-xl font-bold text-primary-dark-blue'>
-                New Location
-              </h3>
-              <AccordionTrigger asChild>
-                <IconButton
-                  onClick={() => setIsInserting(false)}
-                  size='sm'
-                  variant='neutral'
-                >
-                  <Icon as='cross' />
-                </IconButton>
-              </AccordionTrigger>
-            </div>
-          )}
-          <AccordionContent>
-            <OfficeInsertForm onInsert={insertOffice} />
-          </AccordionContent>
-        </AccordionItem>
+      <Collapsible open={isCollapsibleOpen} onOpenChange={setIsCollapsibleOpen}>
+        {!isCollapsibleOpen ? (
+          <CollapsibleTrigger asChild>
+            <Button
+              className={clsx('h-14 justify-between rounded-lg px-6 py-4')}
+              fullWidth
+              rightAddon={<Icon as='add' />}
+            >
+              Add New Location
+            </Button>
+          </CollapsibleTrigger>
+        ) : (
+          <div className='flex items-center justify-between rounded-lg bg-white p-6'>
+            <h3 className='text-xl font-bold text-primary-dark-blue'>
+              New Location
+            </h3>
+            <CollapsibleTrigger asChild>
+              <IconButton size='sm' variant='neutral'>
+                <Icon as='cross' />
+              </IconButton>
+            </CollapsibleTrigger>
+          </div>
+        )}
+        <CollapsibleContent>
+          <OfficeInsertForm
+            onInsert={(d) => {
+              insertOffice(d)
+              setIsCollapsibleOpen(false)
+            }}
+          />
+        </CollapsibleContent>
+      </Collapsible>
+      <Accordion collapsible onValueChange={onChangeAccordion} type='single'>
         {offices.map((office) => {
           return (
             <AccordionItem key={office.id} value={office.id}>
