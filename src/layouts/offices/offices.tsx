@@ -6,7 +6,7 @@ export const OfficesLayout = () => {
   return (
     <ToastProvider>
       <Toast />
-      <main className='mx-auto flex min-h-screen w-full max-w-[320px] flex-col justify-center py-12'>
+      <main className='mx-auto min-h-screen w-full max-w-[320px] pb-12 pt-[160px]'>
         <header className='pb-6'>
           <h1 className='text-center text-[4rem] font-light leading-none text-accent-blue'>
             Offices
