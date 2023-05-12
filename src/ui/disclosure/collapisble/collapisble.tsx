@@ -42,7 +42,7 @@ type ContentProps = RadixCollapsiblePrimitive.CollapsibleContentProps
 const Content = ({ children, ...props }: ContentProps) => {
   return (
     <RadixCollapsiblePrimitive.CollapsibleContent
-      className='overflow-hidden p-6 data-[state=closed]:animate-slideCollapsibleUp data-[state=open]:animate-slideCollapsibleDown'
+      className='overflow-hidden px-8 py-6 data-[state=closed]:animate-slideCollapsibleUp data-[state=open]:animate-slideCollapsibleDown'
       {...props}
     >
       {children}
