@@ -13,22 +13,21 @@
 
 Project made for Dog and Pony Studios front end developer challenge.
 
-## Techs 🚀
+## Libs 🚀
 
-The project was developed with following technologies:
+The project was developed with following libraries:
 
-- **[Eslint](https://eslint.org/)**
-- **[Husky](https://typicode.github.io/husky/#/)**
-- **[Lint Staged](https://github.com/okonet/lint-staged)**
-- **[Next.js](https://nextjs.org/)**
-- **[Prettier](https://prettier.io/)**
-- **[Radix UI](https://www.radix-ui.com/)**
-- **[React Hook Form](https://react-hook-form.com/)**
-- **[React](https://react.dev/)**
-- **[TailwindCSS](https://tailwindcss.com/)**
-- **[Typescript](https://www.typescriptlang.org/)**
-- **[Zod](https://zod.dev/)**
-- **[Zustand](https://github.com/pmndrs/zustand)**
+- **[Next.js](https://nextjs.org)** is the React Web Framework of choice
+- Styling with **[TailwindCSS](https://tailwindcss.com)**
+- **[Radix UI](https://www.radix-ui.com)** accessible and customizable library
+- **[React Hook Form](https://react-hook-form.com)** to deal with forms
+- Modern State Manager with **[Zustand](https://github.com/pmndrs/zustand)**
+- Linting with **[Eslint](https://eslint.org)**
+- Code formatting with **[Prettier](https://prettier.io)**
+- Git hook with **[Husky](https://github.com/typicode/husky)**
+- **[Lint Staged](https://github.com/okonet/lint-staged)** to check staged files before commits
+- Static Types with **[Typescript](https://www.typescriptlang.org)**
+- Runtime schema validation with **[Zod](https://zod.dev)**
 
 ## Getting Started 📦
 
