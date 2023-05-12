@@ -1,3 +1,5 @@
+import { Metadata } from 'next'
+
 import { Roboto } from 'next/font/google'
 
 import '@/styles/globals.css'
@@ -8,7 +10,7 @@ const roboto = Roboto({
   weight: ['300', '400', '700'],
 })
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Dog And Pony Studios - Offices',
   description: 'An application to list all Dog And Pony Studio Offices',
 }
